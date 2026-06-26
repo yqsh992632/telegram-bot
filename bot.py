@@ -1,4 +1,9 @@
 import os
+import subprocess
+import sys
+
+subprocess.check_call([sys.executable, "-m", "pip", "install", "schedule", "python-telegram-bot"])
+
 import schedule
 import time
 import asyncio
