@@ -37,6 +37,4 @@ schedule.every().day.at("19:00").do(job3)
 print("🤖 Bot chalu hai!")
 while True:
     schedule.run_pending()
-    time.sleep(60)nano requirements.txt
-python-telegram-bot==20.7
-schedule==1.2.1
+    time.sleep(60)
