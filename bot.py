@@ -62,7 +62,20 @@ schedule.every().day.at("19:00").do(job3)
 print("Bot chalu hai!")
 ai_msg = ai_reply("Ek chota motivational quote Hindi mein do")
 asyncio.run(send_message("AI ka sandesh: " + ai_msg))
+from telegram.ext import Application, MessageHandler, filters
 
+async def handle_message(update, context):
+    user_text = update.message.text
+    reply = ai_reply(user_text)
+    await update.message.reply_text(reply)
+
+async def run_bot():
+    app = Application.builder().token(BOT_TOKEN).build()
+    app.add_handler(MessageHandler(filters.TEXT, handle_message))
+    await app.run_polling()
+
+import threading
+threading.Thread(target=lambda: asyncio.run(run_bot())).start()
 while True:
     schedule.run_pending()
     time.sleep(60)
