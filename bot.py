@@ -21,6 +21,8 @@ messages = [
 ]
 
 def ai_reply(user_message):
+    if not GROQ_KEY:
+        return "AI abhi available nahi hai"
     response = requests.post(
         "https://api.groq.com/openai/v1/chat/completions",
         headers={
