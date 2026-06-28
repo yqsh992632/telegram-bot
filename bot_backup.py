@@ -7,34 +7,16 @@ subprocess.check_call([sys.executable, "-m", "pip", "install", "schedule", "pyth
 import schedule
 import time
 import asyncio
-import requests
 from telegram import Bot
 
 BOT_TOKEN = os.environ.get("BOT_TOKEN")
 CHAT_ID = os.environ.get("CHAT_ID")
-GROQ_KEY = os.environ.get("GROQ_KEY")
 
 messages = [
-    "Good Morning! Aaj ka din achha ho",
+    "Good Morning! Aaj ka din accha ho",
     "Dopahar reminder: Paani piyo",
     "Shaam reminder: Rest karo",
 ]
-
-def ai_reply(user_message):
-    response = requests.post(
-        "https://api.groq.com/openai/v1/chat/completions",
-        headers={
-            "Authorization": "Bearer " + GROQ_KEY,
-            "Content-Type": "application/json"
-        },
-        json={
-            "model": "llama-3.3-70b-versatile",
-            "messages": [
-                {"role": "user", "content": user_message}
-            ]
-        }
-    )
-    return response.json()['choices'][0]['message']['content']
 
 async def send_message(text):
     try:
@@ -58,9 +40,6 @@ schedule.every().day.at("14:00").do(job2)
 schedule.every().day.at("19:00").do(job3)
 
 print("Bot chalu hai!")
-ai_msg = ai_reply("Ek chota motivational quote Hindi mein do")
-asyncio.run(send_message("AI ka sandesh: " + ai_msg))
-
 while True:
     schedule.run_pending()
     time.sleep(60)
